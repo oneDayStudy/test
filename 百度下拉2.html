@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>666</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 微软雅黑;
+        }
+
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background: #ccc;
+        }
+    </style>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-resource.js"></script>
+    <script>
+        window.onload = function () {
+            var vm=new Vue({//根实例
+                el:'#app',
+                data:{
+                    ipt:'',
+                    arr:[]
+                },
+                methods:{
+                    get(){
+                        //请求数据jsonp
+                        let url='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su';
+                        this.$http.jsonp(url,{
+                            wd:this.ipt
+                        },{
+                            jsonp:'cb'
+                        }).then((res)=>{
+                            if(res.ok){
+//                alert(res.data.s);
+                            this.arr = res.data.s;
+                        }
+                    },(res)=>{
+                            alert(res.status);
+                        });
+
+                    }
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="ipt" @keyup="get">
+    <ul>
+        <li v-for="val in arr">{{val}}</li>
+    </ul>
+</div>
+
+
+</body>
+</html>

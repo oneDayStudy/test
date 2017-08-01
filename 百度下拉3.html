@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource.js"></script>
+    <script>
+        window.onload = function () {
+            new Vue({//根实例
+                el:'#app',
+                data:{
+                    ipt:'',
+                    arr:[]
+                },
+                watch:{//数据监听
+                    ipt:function(newValue,oldValue){
+                        console.log(newValue,oldValue);//新老数据
+                        //请求数据jsonp
+                        let url='https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su';
+                        this.$http.jsonp(url,{
+                            wd:this.ipt
+                        },{
+                            jsonp:'cb'
+                        }).then((res)=>{
+                            if(res.ok){
+//                alert(res.data.s);
+                                this.arr = res.data.s;
+
+
+                        }
+                    },(res)=>{
+                            alert(res.status);
+                        });
+                    }
+                }
+            });
+        };
+    </script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="ipt">
+    <ul>
+        <li v-for="val in arr">{{val}}</li>
+    </ul>
+</div>
+
+
+</body>
+</html>

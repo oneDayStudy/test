@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+<body>
+<script>
+    window.onload=function(){
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                ipt:"ipt1",
+                arr:[]
+            },
+            methods:{
+                get(){
+                    var url = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su"
+                    this.$http.jsonp(url,{
+                        wd:this.ipt
+                    },{jsonp:'cb'}).then((res)=>{
+                        console.log(res)
+                    if(res.ok){
+                        this.arr = res.data.s
+                    }
+                    })
+                }
+            }
+        })
+    }
+
+</script>
+
+<div id="app">
+    {{ipt}}
+    <input type="text" v-model="ipt" @keyup="get">
+    <ul>
+        <li v-for="val in arr">{{val}}</li>
+    </ul>
+</div>
+</body>
+</html>
